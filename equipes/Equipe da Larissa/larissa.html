@@ -1,0 +1,123 @@
+<nav>
+  <a href="/index.html">Início</a>
+</nav>
+
+<canvas width="600" height="400"> </canvas>
+
+<script type="text/javascript">
+//Variaveis do Canvas
+    var tela = document.querySelector("canvas");
+    var pincel = tela.getContext("2d");
+    var width = tela.width
+    var height = tela.height
+
+//Teclas
+    var cima = 38
+    var baixo = 40
+//Variaveis da Bolinha
+    var xBolinha = 300
+    var yBolinha = 200
+    var velocidadeX = 2
+    var velocidadeY = 2
+    var diametro = 15
+    var raio = diametro/2
+//Variaveis da Minha Raquete
+    var xRaquete1Tamanho = 8
+    var yRaquete1Tamanho = 100
+    var movimentoRaquete1 = 0
+    var xRaquete1 = 5
+    var velocidadeRaquete1 = 12
+    function yRaquete1(){
+        return (200 - (yRaquete1Tamanho/2) + movimentoRaquete1)
+    }
+//variaveis da Raquete do Oponente
+    var xRaquete2Tamanho = 8
+    var yRaquete2Tamanho = 100
+    var movimentoRaquete2 = 0
+    var xRaquete2= (600 - 5 - xRaquete2Tamanho)
+    var velocidadeRaquete2 = 12
+    function yRaquete2(){
+        return (200 - (yRaquete2Tamanho/2) + movimentoRaquete2)
+    }
+
+//Desenha um circulo
+    function circle(x_inicial, y_inicial, diametro){
+
+        pincel.fillStyle = "white";
+        pincel.beginPath();
+        pincel.arc(x_inicial, y_inicial, (diametro/2), 0, 2*3.14);
+        pincel.fill()
+    }
+//Desenha um retangulo
+    function retangulo (x_inicial, y_inicial, x_final, y_final, cor){
+
+        pincel.fillStyle = cor; 
+        pincel.fillRect(x_inicial, y_inicial, x_final , y_final);
+
+    } 
+//Preenche o fundo
+    function fundo() {
+          retangulo(0, 0, 600, 400, "black");
+    }
+//funcionamento da bolinha
+    function bolinha() {
+        circle(xBolinha, yBolinha, diametro)
+        movimentoBolinha()
+          colisaoBordas()
+          colisaoRaquete1()
+    }
+
+    function movimentoBolinha(){
+        xBolinha += velocidadeX;
+        yBolinha += velocidadeY;
+    }
+//colisão com as bordas
+    function colisaoBordas(){
+        if(xBolinha > (width-diametro/2)||xBolinha<(0+diametro/2)){
+            velocidadeX *= -1;
+        }
+        if(yBolinha > (height-diametro/2)||yBolinha<(0+diametro/2)){
+            velocidadeY *= -1;
+          }
+    }
+//colisão com minha raquete
+    function colisaoRaquete1(){
+        if((xBolinha - raio < xRaquete1 + xRaquete1Tamanho) && (yBolinha - raio > yRaquete1()) && (yBolinha - raio < yRaquete1() + yRaquete1Tamanho)){
+            velocidadeX *= -1;
+        }
+    }
+//Renderizar a tela
+    function renderizar(){
+        fundo()
+        bolinha()
+        raquete1()
+        raquete2()
+    }
+    setInterval(renderizar, 10)
+//Minha raquete
+    function raquete1(){
+        retangulo(xRaquete1, yRaquete1(), xRaquete1Tamanho, yRaquete1Tamanho, "white")
+    }
+
+    function moveRaquete1(evento){
+        if(yRaquete1()>=(0)){
+            if(evento.keyCode == cima) {
+                movimentoRaquete1-=velocidadeRaquete1;
+            }
+        }
+        if(yRaquete1()<(400-(yRaquete1Tamanho))){
+            if(evento.keyCode == baixo) {
+                movimentoRaquete1+=velocidadeRaquete1;
+            }
+        }            
+    }
+    document.onkeydown = moveRaquete1;
+
+//Raquete do Oponente    
+    function raquete2(){
+        retangulo(xRaquete2, yRaquete2(), xRaquete2Tamanho, yRaquete2Tamanho, "white")
+    }
+
+
+
+</script>

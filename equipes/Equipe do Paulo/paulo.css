@@ -1,0 +1,46 @@
+body {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+    margin: 20px;
+}
+
+main {
+    flex: 1; /* Ocupa o espaço restante */
+    margin-right: 20px; /* Espaço entre o conteúdo principal e o aside */
+}
+
+aside {
+    width: 250px; /* Largura fixa do aside */
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 15px;
+}
+
+aside h2 {
+    margin-top: 0;
+}
+
+aside ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+aside ul li {
+    margin: 5px 0;
+}
+
+aside ul li a {
+    text-decoration: none;
+    color: #007BFF;
+}
+
+aside ul li a:hover {
+    text-decoration: underline;
+}
